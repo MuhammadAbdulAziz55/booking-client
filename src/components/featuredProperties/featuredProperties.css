@@ -39,3 +39,30 @@
 .fpRating > span {
   font-size: 14px;
 }
+
+@media screen and (max-width: 680px) {
+  .fp {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fpImg {
+    width: 60%;
+  }
+
+  .fpItem {
+    margin-bottom: 40px;
+    align-items: center;
+  }
+
+  .fpName {
+    font-size: 14px;
+  }
+  .fpCity {
+    font-size: 13px;
+  }
+
+  .fpPrice {
+    font-size: 14px;
+  }
+}

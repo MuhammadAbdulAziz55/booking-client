@@ -1,14 +1,15 @@
 import useFetch from "../../hooks/useFetch";
+import Spinner from "../spinners/Spinner";
 import "./featuredProperties.css";
 
 const FeaturedProperties = () => {
   const { data, loading, error } = useFetch(
-    "http://localhost:8800/api/hotels?featured=true&min=10&max=200"
+    "https://hotel-booking-server-rsat.onrender.com/api/hotels?featured=true&min=10&max=200"
   );
   return (
     <div className="fp">
       {loading ? (
-        "Loading"
+        <Spinner />
       ) : (
         <>
           {data.map((item) => (

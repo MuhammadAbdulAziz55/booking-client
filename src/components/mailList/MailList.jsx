@@ -9,7 +9,7 @@ const MailList = () => {
       </span>
       <div className="mailInputContainer">
         <input type="text" placeholder="Your Email" />
-        <button>Subscribe</button>
+        <button className="SubscribeButton">Subscribe</button>
       </div>
     </div>
   );

@@ -26,3 +26,15 @@
 .fcText {
   text-align: center;
 }
+
+@media screen and (max-width: 680px) {
+  .fListContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+  }
+
+  .fLists {
+    margin-bottom: 20px;
+  }
+}

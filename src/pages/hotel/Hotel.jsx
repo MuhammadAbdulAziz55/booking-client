@@ -17,6 +17,7 @@ import useFetch from "../../hooks/useFetch";
 import { useLocation } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 import Reserve from "../../components/reserve/Reserve";
+import Spinner from "../../components/spinners/Spinner";
 
 const Hotel = () => {
   const location = useLocation();
@@ -25,7 +26,7 @@ const Hotel = () => {
   const [slidNumber, setSlidNumber] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const { data, loading, error } = useFetch(
-    `http://localhost:8800/api/hotels/find/${id}`
+    `https://hotel-booking-server-rsat.onrender.com/api/hotels/find/${id}`
   );
   console.log(data, "data");
   const { date, options } = useContext(SearchContext);
@@ -65,7 +66,7 @@ const Hotel = () => {
       <Navbar />
       <Header type="list" />
       {loading ? (
-        "loading"
+        <Spinner />
       ) : (
         <>
           <div className="hotelContainer">

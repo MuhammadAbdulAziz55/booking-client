@@ -1,15 +1,16 @@
 import useFetch from "../../hooks/useFetch";
+import Spinner from "../spinners/Spinner";
 import "./featured.css";
 
 const Featured = () => {
   const { data, loading, error } = useFetch(
-    "http://localhost:8800/api/hotels/countByCity?cities=Chittagong,Dhaka,Shylet"
+    "https://hotel-booking-server-rsat.onrender.com/api/hotels/countByCity?cities=Chittagong,Dhaka,Shylet"
   );
   console.log(data);
   return (
     <div className="featured">
       {loading ? (
-        <div>Loading please wait...</div>
+        <Spinner />
       ) : (
         <>
           <div className="featuredItem">

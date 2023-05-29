@@ -1,61 +1,63 @@
-import { createContext, useEffect, useReducer } from "react";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
+import { auth, googleProvider } from "../firebase/firebase.config";
 
-const INITIAL_STATE = {
-  user: null,
-  loading: false,
-  error: null,
-};
-
-export const AuthContext = createContext(INITIAL_STATE);
-
-const AuthReducer = (state, action) => {
-  switch (action.type) {
-    case "LOGIN_START":
-      return {
-        user: null,
-        loading: true,
-        error: null,
-      };
-    case "LOGIN_SUCCESS":
-      return {
-        user: action.payload,
-        loading: false,
-        error: null,
-      };
-    case "LOGIN_FAILURE":
-      return {
-        user: null,
-        loading: false,
-        error: action.payload,
-      };
-    case "LOGOUT":
-      return {
-        user: null,
-        loading: false,
-        error: null,
-      };
-    default:
-      return state;
-  }
-};
+export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const createUser = (email, password) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const loginWithGoogle = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
+
+  const login = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const updateUserProfile = (profile) => {
+    return updateProfile(auth.currentUser, profile);
+  };
+
+  const logOut = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(state.user));
-  }, [state.user]);
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser);
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unSubscribe();
+  }, []);
+  const authInfo = {
+    user,
+    loading,
+    createUser,
+    loginWithGoogle,
+    login,
 
+    updateUserProfile,
+    logOut,
+  };
   return (
-    <AuthContext.Provider
-      value={{
-        user: state.user,
-        loading: state.loading,
-        error: state.error,
-        dispatch,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
 };

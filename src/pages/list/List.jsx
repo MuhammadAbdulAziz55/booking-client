@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 import useFetch from "../../hooks/useFetch";
+import Spinner from "../../components/spinners/Spinner";
 
 const List = () => {
   const location = useLocation();
@@ -19,9 +20,9 @@ const List = () => {
   const [max, setMax] = useState(undefined);
 
   const { data, loading, error, reFetch } = useFetch(
-    `http://localhost:8800/api/hotels?city=${destination}&min=${min || 1}&max=${
-      max || 999
-    }`
+    `https://hotel-booking-server-rsat.onrender.com/api/hotels?city=${destination}&min=${
+      min || 1
+    }&max=${max || 999}`
   );
 
   const handleClick = () => {
@@ -110,7 +111,7 @@ const List = () => {
           </div>
           <div className="listResult">
             {loading ? (
-              "loading"
+              <Spinner />
             ) : (
               <>
                 {data.map((item) => (

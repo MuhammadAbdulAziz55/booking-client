@@ -27,3 +27,25 @@
   bottom: 20px;
   left: 20px;
 }
+
+@media screen and (max-width: 680px) {
+  .featured {
+    display: flex;
+    flex-direction: column;
+    margin-top: 70px;
+  }
+
+  .featuredItem {
+    align-items: center;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  .featuredImg {
+    width: 100%;
+  }
+
+  .featuredTitle {
+    font-size: 14px;
+  }
+}
